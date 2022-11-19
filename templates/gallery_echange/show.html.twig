@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie d'échanges' de
+	{{gallery_echange.user.firstName}}
+	{{gallery_echange.user.lastName}}.
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5 text-center">
+		<h1 class="text-center massenet">Les œuvres de
+			{{gallery_echange.user.firstName}}
+			{{gallery_echange.user.lastName}}
+			à l'échange.</h1>
+		<table class="table mt-3" style="width:85%;" id="container_images">
+			<tbody>
+
+				<tr>
+					<th>Nom de la galerie</th>
+					<td>{{ gallery_echange.name }}</td>
+				</tr>
+				<tr>
+					<th>Les œuvres</th>
+					<td>
+
+						{% for artisticWork in gallery_echange.artisticWorks %}
+
+							{% if artisticWork %}
+								<p><img onclick="agrandir()" src="{{ asset(['images/artisticWorks/', artisticWork.picture]|join) }} " class="image_petite"></p>
+
+								<p class="mt-5">
+									<span class="titre_profil" style="color:#ffffff;">Son titre:</span>
+									{{ artisticWork.name|title }}:</p>
+								<p>
+									<span class="titre_profil" style="color:#ffffff;">Sa déscription:</span>
+									{{ artisticWork.description }}</p>
+
+								<div class="text-center">
+									<button class="btn bouton mt-3 text-center">Laissez vous tenter</button>
+								</div>
+
+								<hr>
+							{% else %}
+								<p class="text-center">Il n'y a pas encore d'œuvre dans cette galerie.</p>
+							{% endif %}
+						{% endfor %}
+
+					</td>
+
+
+				</tr>
+			</tbody>
+		</table>
+		<div class="container text-center liens_blancs">
+			<button class="btn bouton">
+				<a href="{{path('user_show', {'slug' : gallery_echange.user.slug})}}">Visiter le profil de
+					{{gallery_echange.user.firstName}}
+					{{gallery_echange.user.lastName}}.</a>
+			</button>
+
+			<button class="btn bouton">
+				<a href="{{ path('share_index') }}">Retour à la liste des galeries d'échanges.</a>
+			</button>
+
+		</div>
+
+
+	</div>
+	<script>
+		document.getElementById('inscription').style.display = 'block';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<script>
+			document.getElementById('admin').style.display = 'block';
+		</script>
+
+	{% endif %}
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app/js') }}
+
+	{% endblock %}
+{% endblock %}

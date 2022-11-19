@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Abonnements
+{% endblock %}
+
+{% block body %}
+	<div class="container text-center">
+		<h1 class="text-center massenet mt-5">Cette page proposera les abonnements.</h1>
+
+		<a href="https://buy.stripe.com/test_bIY9C59903MwfyUeUU">Abonnement annuel</a>
+
+	</div>
+	<script>
+		document.getElementById('inscription').style.display = 'block';
+document.getElementById('connexion').style.display = 'block';
+document.getElementById('admin').style.display = 'none';
+document.getElementById('member').style.display = 'none';
+document.getElementById('deconnexion').style.display = 'none';
+document.getElementById('achats').style.display = 'none';
+document.getElementById('echanges').style.display = 'none';
+document.getElementById('echange').style.display = 'none';
+document.getElementById('achat').style.display = 'none';
+document.getElementById('deco').style.display = 'none';
+document.getElementById('bleudeco').style.display = 'none';
+	</script>
+	{% if app.user %}
+		<script>
+			document.getElementById('member').style.display = 'block';
+document.getElementById('bleudeco').style.display = 'block';
+document.getElementById('deco').style.display = 'block';
+document.getElementById('deconnexion').style.display = 'block';
+document.getElementById('achats').style.display = 'block';
+document.getElementById('echanges').style.display = 'block';
+document.getElementById('inscription').style.display = 'none';
+document.getElementById('connexion').style.display = 'none';
+document.getElementById('admin').style.display = 'none';
+		</script>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<script>
+			document.getElementById('admin').style.display = 'block';
+		</script>
+	{% endif %}
+
+{% endblock %}
