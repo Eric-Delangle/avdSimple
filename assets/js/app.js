@@ -28,7 +28,7 @@ import '../css/app.css';
 /* j'importe mon component */
 
 require('../css/app.css');
-
+//require('./images.js');
 // DEBUT DE MES SCRIPTS
 // dans cet objet j'appele toutes mes classes
 

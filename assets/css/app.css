@@ -310,6 +310,13 @@
     color: #ffffff !important;
   }
   
+  #bleudeco {
+    display:none;
+  }
+
+  #deco {
+    display:none;
+  }
   
   /* liens de droite */
   

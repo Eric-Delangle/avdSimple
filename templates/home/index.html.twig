@@ -7,7 +7,7 @@
 	<div class="container text-center mt-3">
 		<h1 class="titre mt-5">Avenue des
 			<span class="A_titre">a</span>rtistes</h1>
-		<p class="massenet slogan">Pour échanger ou vendre vos œuvres d'art.</p>
+		<p class="massenet slogan">Pour échanger vos œuvres d'art.</p>
 
 	</div>
 	<div
@@ -60,31 +60,7 @@
 
 	</div>
 <script> main();</script>
-	<script>
-		document.getElementById('inscription').style.display = 'block';
-document.getElementById('connexion').style.display = 'block';
-document.getElementById('admin').style.display = 'none';
-document.getElementById('pas_vu').style.display = 'none';
-document.getElementById('member').style.display = 'none';
-document.getElementById('deconnexion').style.display = 'none';
-document.getElementById('echanges').style.display = 'none';
-document.getElementById('echange').style.display = 'none';
-document.getElementById('achat').style.display = 'none';
-document.getElementById('deco').style.display = 'none';
-document.getElementById('bleudeco').style.display = 'none';
-	</script>
-	{% if app.user %}
-		<script>
-			document.getElementById('member').style.display = 'block';
-document.getElementById('bleudeco').style.display = 'block';
-document.getElementById('deco').style.display = 'block';
-document.getElementById('deconnexion').style.display = 'block';
-document.getElementById('echanges').style.display = 'block';
-document.getElementById('inscription').style.display = 'none';
-document.getElementById('connexion').style.display = 'none';
-document.getElementById('admin').style.display = 'none';
-		</script>
-	{% endif %}
+
 	{#
 	{% if is_granted('ROLE_ADMIN') %}
 		<script>
