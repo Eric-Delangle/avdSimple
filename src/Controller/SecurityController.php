@@ -82,7 +82,7 @@ class SecurityController extends AbstractController
             // email d'activation
 
             $email = (new Email())
-                ->from('hello@example.com')
+                ->from('copeauxdecouleurs@gmail.com')
                 ->to($user->getEmail())
 
                 ->subject('Activation de votre compte')
@@ -144,6 +144,7 @@ class SecurityController extends AbstractController
         // Le service authentication_utils permet de récupérer le nom d'utilisateur
         // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
         // (mauvais mot de passe par exemple)
+       
 
         return $this->render('security/login.html.twig', array(
             'last_username' => $this->authenticationUtils->getLastUsername(),

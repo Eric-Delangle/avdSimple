@@ -12,7 +12,7 @@
   /* MEDIAQUERIES */
   
   /* petit écran sm (téléphone mode paysage , 576px et plus) */
-  @media (min-width: 576px) {
+  @media (min-width: 480px) {
   
   
       /* slogan */
@@ -73,12 +73,18 @@
   .punaise_map {
       display: none;
   }
+
+  .container {
+    max-width: 100%;
+}
   }
   
   /* petit écran md (tablette , 768px et plus) */
   @media (min-width: 768px) {
-      
+    .container {
+      max-width: 100%;
   }
+}
   
   /* écran large ld (ordinateur , 992px et plus) */
   @media (min-width: 992px) {
@@ -317,6 +323,10 @@
   #deco {
     display:none;
   }
+
+  #echange {
+    display: none;
+  }
   
   /* liens de droite */
   
@@ -442,8 +452,8 @@
   .punaise_map {
     position: absolute;
     z-index: 9;
-    top: 280px;
-    left: 660px;
+    top: 310px;
+    left: 625px;
   }
   
   /* infos membre sur la carte */
