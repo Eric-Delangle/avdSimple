@@ -15,13 +15,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Notifier\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
@@ -29,7 +29,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  * @UniqueEntity(fields="email")
  * @Vich\Uploadable()
  */
-class User 
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -161,12 +161,34 @@ class User
      */
     private $activation_token;
 
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
+
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->roles = ['ROLE_USER'];
         $this->messages = new ArrayCollection();
+    }
+
+  /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     public function getNiveau(): ?int
@@ -345,10 +367,7 @@ class User
     public function eraseCredentials()
     {
     }
-    public function getUserName()
-    {
-        return $this->email;
-    }
+   
     public function getSalt()
     {
     }
@@ -497,6 +516,26 @@ class User
     public function setActivationToken(?string $activation_token): self
     {
         $this->activation_token = $activation_token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userIdentifier
+     */ 
+    public function getUserIdentifier() :string
+    {
+        return $this->userIdentifier;
+    }
+
+    /**
+     * Set the value of userIdentifier
+     *
+     * @return  self
+     */ 
+    public function setUserIdentifier($userIdentifier)
+    {
+        $this->userIdentifier = $userIdentifier;
 
         return $this;
     }
