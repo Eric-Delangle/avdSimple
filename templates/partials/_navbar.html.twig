@@ -6,28 +6,16 @@
 			<li class="nav-item bleu" id="pas_vu">
 				<a class="nav-link massenet" href="{{ path('home' ) }}" style="font-size:1.5em;">Accueil</a>
 			</li>
-			{#
-			<li class="nav-item bleu" id="acheter">
-				<a class="nav-link massenet" href="{{ path('buy_index') }}" style="font-size:1.5em;">Acheter</a>
-			</li>
-			#}
 			<li class="nav-item bleu" id="echanger">
 				<a class="nav-link massenet" href="{{ path('share_index') }}" style="font-size:1.5em;">Echanger</a>
 			</li>
 			<li class="nav-item bleu" id="contact">
-				<a class="nav-link massenet" href="#" style="font-size:1.5em;">Contact</a>
+				<a class="nav-link massenet" href="{{ path('contact_us') }}" style="font-size:1.5em;">Contact</a>
 			</li>
 
 		</ul>
 
 		<ul class="navbar-nav ml-auto liens_droits">
-		{#
-			<li class="nav-item bleu" id="achat">
-				<a href="#" class="nav-link massenet" id="achats">
-					<i class="fas fa-shopping-bag bleuMarine"></i>
-					Vos achats</a>
-			</li>
-			#}
 			<li class="nav-item bleu" id="echange">
 				<a href="#" class="nav-link massenet" id="echanges">
 					<i class="far fa-handshake"></i>
@@ -38,13 +26,6 @@
 					<i class="fas fa-user-circle bleuCiel"></i>
 					Inscription</a>
 			</li>
-			{#
-			<li lass="nav-item bleu">
-				<a class="nav-link orange massenet" id="abonnement" href="{{ path("subscriber_index")}}" tabindex="-1" aria-disabled="true">
-					<i class="fas fa-marker"></i>
-					Abonnements</a>
-			</li>
-			#}
 			<li lass="nav-item bleu">
 				<a class="nav-link noir massenet" id="connexion" href="{{ path("security_login")}}" tabindex="-1" aria-disabled="true">
 					<i class="fas fa-sign-in-alt rose"></i>
@@ -69,28 +50,3 @@
 
 	</div>
 </nav>
-<script>
-	document.getElementById('inscription').style.display = 'block';
-	document.getElementById('connexion').style.display = 'block';
-	document.getElementById('admin').style.display = 'none';
-	document.getElementById('pas_vu').style.display = 'none';
-	document.getElementById('member').style.display = 'none';
-	document.getElementById('deconnexion').style.display = 'none';
-	document.getElementById('echanges').style.display = 'none';
-	document.getElementById('echange').style.display = 'none';
-	document.getElementById('achat').style.display = 'none';
-	document.getElementById('deco').style.display = 'none';
-	document.getElementById('bleudeco').style.display = 'none';
-</script>
-{% if app.user %}
-	<script>
-		document.getElementById('member').style.display = 'block';
-		document.getElementById('bleudeco').style.display = 'block';
-		document.getElementById('deco').style.display = 'block';
-		document.getElementById('deconnexion').style.display = 'block';
-		document.getElementById('echanges').style.display = 'block';
-		document.getElementById('inscription').style.display = 'none';
-		document.getElementById('connexion').style.display = 'none';
-		document.getElementById('admin').style.display = 'none';
-	</script>
-{% endif %}

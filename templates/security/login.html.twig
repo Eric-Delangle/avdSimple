@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 	<div class="container">
-		<h1 class="titre text-center mt-5">Connexion</h1>
+		<h1 class="titre text-center mt-5">Conn<span class="A_titre">e</span>xion</h1>
 		<br>
 		<form action="{{ path('security_login') }}" method="post" class="placeho">
 			<div class="form-group">
@@ -20,15 +20,13 @@
 	</div>
 	<script>
 		document.getElementById('inscription').style.display = 'none';
-document.getElementById('connexion').style.display = 'none';
-document.getElementById('admin').style.display = 'none';
-document.getElementById('member').style.display = 'none';
-document.getElementById('deconnexion').style.display = 'none';
-document.getElementById('achats').style.display = 'none';
-document.getElementById('echanges').style.display = 'none';
-document.getElementById('echange').style.display = 'none';
-document.getElementById('achat').style.display = 'none';
-document.getElementById('deco').style.display = 'none';
-document.getElementById('bleudeco').style.display = 'none';
+		document.getElementById('connexion').style.display = 'none';
+		document.getElementById('admin').style.display = 'none';
+		document.getElementById('member').style.display = 'none';
+		document.getElementById('deconnexion').style.display = 'none';
+		document.getElementById('achats').style.display = 'none';
+		document.getElementById('echange').style.display = 'none';
+		document.getElementById('deco').style.display = 'none';
+		document.getElementById('bleudeco').style.display = 'none';
 	</script>
 {% endblock %}

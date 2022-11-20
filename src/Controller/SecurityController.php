@@ -19,6 +19,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Doctrine\Persistence\ManagerRegistry;
 
 class SecurityController extends AbstractController
 {
@@ -26,16 +29,18 @@ class SecurityController extends AbstractController
     private $authenticationUtils;
     private $mailer;
 
-    public function __construct(AuthenticationUtils $authenticationUtils, MailerInterface $mailer)
+    public function __construct(private ManagerRegistry $doctrine ,AuthenticationUtils $authenticationUtils, MailerInterface $mailer)
     {
         $this->authenticationUtils = $authenticationUtils;
         $this->mailer = $mailer;
+        $this->doctrine = $doctrine;
     }
 
     /**
      * @Route("/inscription", name="security_registration")
      */
-    public function registration(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $encoder)
+    public function registration(UserPasswordHasherInterface $passwordHasher,
+        Request $request, EntityManagerInterface $manager)
     {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
@@ -51,8 +56,10 @@ class SecurityController extends AbstractController
         } else {
        */
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $hash = $encoder->hashPassword($user, $user->getPassword());
+            $hash = $passwordHasher->hashPassword(
+                $user,
+                $user->getPassword()
+            );
             $user->setPassword($hash);
 
             // on génère le token d'activation
@@ -60,8 +67,8 @@ class SecurityController extends AbstractController
             $user->setActivationToken(md5(uniqid()));
 
 
-            $slugify = new Slugify();
-            $slug = $slugify->slugify($user->getFirstName() . '' . $user->getLastName());
+            $slugify = new AsciiSlugger();
+            $slug = $slugify->slug($user->getFirstName() . '' . $user->getLastName());
             $user->setSlug($slug);
             $user->getCategories(new Category());
             $user->setRegisteredAt(new \DateTime());
@@ -75,7 +82,7 @@ class SecurityController extends AbstractController
             // email d'activation
 
             $email = (new Email())
-                ->from('hello@example.com')
+                ->from('copeauxdecouleurs@gmail.com')
                 ->to($user->getEmail())
 
                 ->subject('Activation de votre compte')
@@ -108,7 +115,10 @@ class SecurityController extends AbstractController
         }
         // on supprime le token
         $user->setActivationToken(null);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
+
+
+
         $em->persist($user);
         $em->flush();
 
@@ -127,13 +137,14 @@ class SecurityController extends AbstractController
 
         // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         /*
-        if ($this->getSubscribedServices('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($this->getSubscribedServices(['security.authorization_checker'])->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('member_index');
         }
 */
         // Le service authentication_utils permet de récupérer le nom d'utilisateur
         // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
         // (mauvais mot de passe par exemple)
+       
 
         return $this->render('security/login.html.twig', array(
             'last_username' => $this->authenticationUtils->getLastUsername(),
