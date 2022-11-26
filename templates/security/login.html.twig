@@ -11,13 +11,30 @@
 				<input placeholder="Votre email" required name="_username" type="text" class="form-control">
 			</div>
 			<div class="form-group">
-				<input placeholder="Votre mot de passe" required name="_password" type="password" class="form-control">
+				<input placeholder="Votre mot de passe" required name="_password" type="password" class="form-control" id="pass"/>
+				<img src="images/closed_eye.png" id="eye" onclick="changer()"/>
+				
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn bouton">Envoyer</button>
 			</div>
 		</form>
 	</div>
+	<script>
+		e = true;
+		function changer() {
+			if (e) {
+				document.getElementById("pass").setAttribute("type","text");
+				document.getElementById("eye").src="images/open_eye.png";
+				e = false;
+			}
+			else {
+				document.getElementById("pass").setAttribute("type","password");
+				document.getElementById("eye").src="images/closed_eye.png";
+				e = true;
+			}
+		}
+ 	</script>
 	<script>
 		document.getElementById('inscription').style.display = 'none';
 		document.getElementById('connexion').style.display = 'none';
