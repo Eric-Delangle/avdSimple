@@ -109,6 +109,7 @@ class SecurityController extends AbstractController
     {
         // on verifie si un utilsateur a ce token
         $user = $userRepo->findoneBy(['activation_token' => $token]);
+        dd($user);
         // si aucun utilisateur n'existe avec ce token
         if (!$user) {
             throw $this->createNotFoundException('Cet utilsateur n\'existe pas');
